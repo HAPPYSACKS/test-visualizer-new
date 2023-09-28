@@ -1,8 +1,13 @@
-//
-//  RecognizedTextDataSource.swift
-//  test-visualizer
-//
-//  Created by Eric Mao on 2023-09-27.
-//
+/*
+See LICENSE folder for this sample’s licensing information.
 
-import Foundation
+Abstract:
+The protocol that a class must conform to in order to receive recognized text information.
+*/
+
+import UIKit
+import Vision
+
+protocol RecognizedTextDataSource: AnyObject {
+    func addRecognizedText(recognizedText: [VNRecognizedTextObservation])
+}

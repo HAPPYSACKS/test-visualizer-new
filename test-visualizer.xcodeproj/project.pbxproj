@@ -13,9 +13,13 @@
 		44F47BD02AC53EF5008024D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44F47BCE2AC53EF5008024D2 /* Main.storyboard */; };
 		44F47BD22AC53EF7008024D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44F47BD12AC53EF7008024D2 /* Assets.xcassets */; };
 		44F47BD52AC53EF7008024D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44F47BD32AC53EF7008024D2 /* LaunchScreen.storyboard */; };
+		44F47BDD2AC53FB0008024D2 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F47BDC2AC53FB0008024D2 /* ResultsViewController.swift */; };
+		44F47BDF2AC53FD9008024D2 /* RecognizedTextDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F47BDE2AC53FD9008024D2 /* RecognizedTextDataSource.swift */; };
+		44F47BE12AC54038008024D2 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F47BE02AC54038008024D2 /* PhotoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		449CFBE82AC54BC00002787A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		44F47BC52AC53EF5008024D2 /* test-visualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-visualizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44F47BC82AC53EF5008024D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44F47BCA2AC53EF5008024D2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +28,9 @@
 		44F47BD12AC53EF7008024D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44F47BD42AC53EF7008024D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44F47BD62AC53EF7008024D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44F47BDC2AC53FB0008024D2 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		44F47BDE2AC53FD9008024D2 /* RecognizedTextDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedTextDataSource.swift; sourceTree = "<group>"; };
+		44F47BE02AC54038008024D2 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +66,14 @@
 				44F47BC82AC53EF5008024D2 /* AppDelegate.swift */,
 				44F47BCA2AC53EF5008024D2 /* SceneDelegate.swift */,
 				44F47BCC2AC53EF5008024D2 /* ViewController.swift */,
+				44F47BDC2AC53FB0008024D2 /* ResultsViewController.swift */,
+				44F47BDE2AC53FD9008024D2 /* RecognizedTextDataSource.swift */,
+				44F47BE02AC54038008024D2 /* PhotoViewController.swift */,
 				44F47BCE2AC53EF5008024D2 /* Main.storyboard */,
 				44F47BD12AC53EF7008024D2 /* Assets.xcassets */,
 				44F47BD32AC53EF7008024D2 /* LaunchScreen.storyboard */,
 				44F47BD62AC53EF7008024D2 /* Info.plist */,
+				449CFBE82AC54BC00002787A /* Config.xcconfig */,
 			);
 			path = "test-visualizer";
 			sourceTree = "<group>";
@@ -141,6 +152,9 @@
 				44F47BCD2AC53EF5008024D2 /* ViewController.swift in Sources */,
 				44F47BC92AC53EF5008024D2 /* AppDelegate.swift in Sources */,
 				44F47BCB2AC53EF5008024D2 /* SceneDelegate.swift in Sources */,
+				44F47BDD2AC53FB0008024D2 /* ResultsViewController.swift in Sources */,
+				44F47BDF2AC53FD9008024D2 /* RecognizedTextDataSource.swift in Sources */,
+				44F47BE12AC54038008024D2 /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +314,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -328,6 +343,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
