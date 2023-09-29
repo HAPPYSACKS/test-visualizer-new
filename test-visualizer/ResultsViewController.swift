@@ -30,12 +30,11 @@ class ResultsViewController: UIViewController {
         }
     }
     
+
+
     @IBAction func generatePressed(_ sender: Any) {
         print("generatePressed called")
-//        performSegue(withIdentifier: "toPhotoView", sender: self)
     }
-
-
     
     
 

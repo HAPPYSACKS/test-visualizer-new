@@ -9,8 +9,6 @@
 // test call to gpt
 // test call to stablediffusion
 // check if api keys are there
-// test the prompt extraction method
-// figure out why PhotoView scene is not loading properly.
 // put parameters into the api calls
 // check if api call body json is right.
 
@@ -23,22 +21,42 @@ let gpt_api = "https://api.openai.com/v1/chat/completions"
 class PhotoViewController: UIViewController {
     var receivedHighlightedTexts: String?
     
-    func extractPromptSection(from input: String) -> String? {
-        // Define a regular expression pattern
-        let pattern = #"\["text": .*?\]\]"#
+    func extractPromptSection(from input: String) -> [[String: Any]] {
+        // Define regular expression patterns for "text" and "weight" values
+        let textPattern = #""text":\s*"(.*?)"\s*,\s*""#
+        let weightPattern = #""weight":\s*([0-9]+(?:\.[0-9]+)?)"#
         
-        // Create a regular expression object
-        if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
-            let matches = regex.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
-            
-            // If there's a match, extract and return it
-            if let match = matches.first {
-                let result = (input as NSString).substring(with: match.range)
-                return result
+        // Create regular expression objects
+        guard let textRegex = try? NSRegularExpression(pattern: textPattern, options: []),
+              let weightRegex = try? NSRegularExpression(pattern: weightPattern, options: []) else {
+            return []
+        }
+        
+        // Extract matches for "text" and "weight" values
+        let textMatches = textRegex.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
+        let weightMatches = weightRegex.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
+        
+        // Extract strings for each match
+        let textResults = textMatches.map { (input as NSString).substring(with: $0.range(at: 1)) }
+        let weightResults = weightMatches.map { (input as NSString).substring(with: $0.range(at: 1)) }
+        
+        // Combine the results using `zip` to ensure safe iteration
+        var output: [[String: Any]] = []
+        for (text, weightString) in zip(textResults, weightResults) {
+            if let weight = Double(weightString) {
+                output.append(["text": text, "weight": weight])
             }
         }
-        return nil
+        
+        return output
     }
+
+
+
+
+
+
+
     
     func generatePrompt(selectedText: String, completion: @escaping (String?) -> Void) {
         
@@ -152,6 +170,10 @@ class PhotoViewController: UIViewController {
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print("The view has appeared!")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("I'm PhotoView!")
@@ -183,17 +205,15 @@ class PhotoViewController: UIViewController {
             ["text": "school environment", "weight": 1],
             ["text": "near cafeteria", "weight": 1],
             ["text": "sharp focus", "weight": 1],
-            ["text": "cinematic lighting", "weight": 1]
-            ]
+            ["text": "cinematic lighting", "weight": 1]]
+            
             I've included "Concept art" and "Digital painting" because they fit the illustrative nature of the scene. Additionally, I've added "sharp focus" to emphasize the character and his uniqueness, and "cinematic lighting" to give depth to the environment.
             """
 
             // Extract the desired section
-            if let extractedSection = extractPromptSection(from: chatGPTOutput) {
-                print(extractedSection)
-            } else {
-                print("No matches found.")
-            }
+            let extractedSection = extractPromptSection(from: chatGPTOutput)
+            print(extractedSection)
+
             
 //            generatePrompt(selectedText: receivedHighlightedTexts) { promptResult in
 //                if let prompt = promptResult {
