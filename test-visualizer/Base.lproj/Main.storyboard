@@ -65,14 +65,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1i-Dc-bG9">
-                                <rect key="frame" x="149" y="746" width="95" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Generate"/>
-                                <connections>
-                                    <segue destination="o4T-Ap-SXA" kind="presentation" id="1Ir-w4-SCi"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T6c-PN-ZPw">
                                 <rect key="frame" x="45" y="90" width="302" height="634"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -82,13 +74,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCd-vQ-s3P">
+                                <rect key="frame" x="149" y="756" width="95" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Generate"/>
+                                <connections>
+                                    <action selector="generatePressed:" destination="1rN-EZ-E57" eventType="touchUpInside" id="hFz-lH-O0V"/>
+                                    <segue destination="o4T-Ap-SXA" kind="presentation" identifier="toPhotoView" id="aAP-Sg-t2t"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ULT-1w-0aY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="ULT-1w-0aY" firstAttribute="bottom" secondItem="O1i-Dc-bG9" secondAttribute="bottom" constant="37" id="Dga-qi-XdH"/>
-                            <constraint firstItem="O1i-Dc-bG9" firstAttribute="centerX" secondItem="UTy-9x-hIy" secondAttribute="centerX" id="tXu-Ua-2jw"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="textView" destination="T6c-PN-ZPw" id="giJ-ZM-zqp"/>
@@ -98,22 +96,26 @@
             </objects>
             <point key="canvasLocation" x="1867.9389312977098" y="-2.1126760563380285"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo View Controller-->
         <scene sceneID="unC-5F-cjQ">
             <objects>
-                <viewController id="o4T-Ap-SXA" sceneMemberID="viewController">
+                <viewController id="o4T-Ap-SXA" customClass="PhotoViewController" customModule="test_visualizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HhA-eU-Krf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tXq-ik-4h1">
-                                <rect key="frame" x="44" y="71" width="304" height="700"/>
+                                <rect key="frame" x="54" y="71" width="284" height="700"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="G2N-hi-WFQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="DKX-3j-y9u"/>
+                    <connections>
+                        <outlet property="imageView" destination="tXq-ik-4h1" id="ImP-HE-bpH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TzZ-8V-z8e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
