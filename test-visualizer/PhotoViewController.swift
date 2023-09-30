@@ -108,6 +108,8 @@ class PhotoViewController: UIViewController {
                 } catch {
                     print("Error parsing JSON: \(error.localizedDescription)")
                 }
+            } else {
+                print("no chatgpt data")
             }
         }
         
@@ -139,7 +141,7 @@ class PhotoViewController: UIViewController {
             "clip_guidance_preset": "FAST_BLUE",
             "height": 512,
             "width": 512,
-            "sampler": "K_DPMPP_2M",
+            "sampler": "K_DPM_2_ANCESTRAL",
             "samples": 1,
             "steps": 24,
             "text_prompts": formatted_prompt
@@ -174,6 +176,7 @@ class PhotoViewController: UIViewController {
                     print("Unauthorized. Check if your API key is valid.")
                 case 500:
                     print("Server error. Something went wrong on the server's side.")
+
                 default:
                     print("Received HTTP \(httpResponse.statusCode): \(String(describing: String(data: data!, encoding: .utf8)))")
                 }
