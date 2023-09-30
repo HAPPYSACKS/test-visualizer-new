@@ -5,12 +5,9 @@
 //  Created by Eric Mao on 2023-09-27.
 //
 //TODO
-// finish call to stabiltiy API (add json header)
 // test call to gpt
 // test call to stablediffusion
-// check if api keys are there
-// put parameters into the api calls
-// check if api call body json is right.
+
 
 import Foundation
 import UIKit
@@ -19,6 +16,10 @@ let stable_diffusion_api = "https://api.stability.ai/"
 let gpt_api = "https://api.openai.com/v1/chat/completions"
 
 class PhotoViewController: UIViewController {
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
+    
     var receivedHighlightedTexts: String?
     
     func extractPromptSection(from input: String) -> [[String: Any]] {
@@ -72,14 +73,21 @@ class PhotoViewController: UIViewController {
         let requestBody: [String: Any] = [
             "model": "gpt-3.5-turbo",
             "messages": [
-                ["role": "system", "content": "You are a helpful assistant. You can call functions like `fetch_weather` to get weather information."], // CHANGE THIS
+                ["role": "system", "content": gptContext], // CHANGE THIS
                 ["role": "user", "content": "\(selectedText)"]
             ]
         ]
         
 //        turn requestbody into json
         request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
-//
+//      print out contents of request
+        print("request:\(request)")
+        print("request method: \(String(describing: request.httpMethod))")
+        if let httpBody = request.httpBody, let bodyString = String(data: httpBody, encoding: .utf8) {
+            print("Request Body: \(bodyString)")
+        } else {
+            print("No request body or failed to convert body to string.")
+        }
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
@@ -110,16 +118,21 @@ class PhotoViewController: UIViewController {
     
 //    Assumes prompt comes in this form:
 //    [[text: "sunny", weight: 1.0], [text: "medium", weight: 1.6]]
-    func generateImage(prompt: [[String: Any]], completion: @escaping (Data?) -> Void) {
+    func generateImage(prompt: String?, completion: @escaping (Data?) -> Void) {
         let engine_id = "stable-diffusion-512-v2-1"
-        guard let urlstring = URL(string: stable_diffusion_api + "/v1/generation/" + engine_id + "/text-to-image") else { return }
+        guard let urlstring = URL(string: stable_diffusion_api + "v1/generation/" + engine_id + "/text-to-image") else { return }
         guard let stablediffusionKey  = Bundle.main.infoDictionary?["STABILITY_API_KEY"] as? String else {return}
         var request = URLRequest(url: urlstring)
         request.httpMethod = "POST"
         
-        request.setValue("application/json)", forHTTPHeaderField: "Content-Type")
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("image/png", forHTTPHeaderField: "Accept")
         request.setValue("Bearer \(stablediffusionKey)", forHTTPHeaderField: "Authorization")
+        
+        let formatted_prompt = extractPromptSection(from: prompt ?? "")
+        
+
         
         let requestBody: [String: Any] = [
             "cfg_scale": 7,
@@ -129,32 +142,34 @@ class PhotoViewController: UIViewController {
             "sampler": "K_DPMPP_2M",
             "samples": 1,
             "steps": 24,
-            "text_prompts": prompt
+            "text_prompts": formatted_prompt
         ]
 
 //        turn requestbody into json
         request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+//        print out contents of request
+        
+        print("request:\(request)")
+        print("request method: \(String(describing: request.httpMethod))")
+        if let httpBody = request.httpBody, let bodyString = String(data: httpBody, encoding: .utf8) {
+            print("Request Body: \(bodyString)")
+        } else {
+            print("No request body or failed to convert body to string.")
+        }
         
         
 //            make request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {
-                print("Error fetching data: \(String(describing: error))")
+                print("Error fetching data in SD API: \(String(describing: error))")
                 return
             }
 
             if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case 200:
-                    // Successful request
-                    do {
-                        if let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
-                            // Handle your JSON here
-                            print(jsonResponse)
-                        }
-                    } catch {
-                        print("Error parsing JSON: \(error)")
-                    }
+                    // Successful request, directly pass the image data to the completion handler
+                     completion(data)
                 case 401:
                     print("Unauthorized. Check if your API key is valid.")
                 case 500:
@@ -170,9 +185,6 @@ class PhotoViewController: UIViewController {
 
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        print("The view has appeared!")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,66 +192,100 @@ class PhotoViewController: UIViewController {
 
         if let text = receivedHighlightedTexts {
             // Use the text, e.g., display it in a label or process it
-            print(text)
-            
-            
-            let chatGPTOutput = """
-            Based on the provided book scene, I'll extract the essence of it to fit the format you're looking for. Here's a snapshot description before forming the final prompt:
-
-            Character: A scrawny boy in the sixth grade with some physical attributes making him stand out.
-            Details: Acne, beginnings of a wispy beard, muscular disease in legs, unique walk, running towards the cafeteria.
-            Setting: School environment, possibly near a cafeteria.
-            Prompt:
-
-            css
-            Copy code
-            [["text": "Concept art", "weight": 1],
-            ["text": "Digital painting", "weight": 1],
-            ["text": "1boy", "weight": 1],
-            ["text": "scrawny", "weight": 1],
-            ["text": "sixth grade", "weight": 1],
-            ["text": "acne", "weight": 1],
-            ["text": "wispy beard", "weight": 1],
-            ["text": "unique walk", "weight": 1],
-            ["text": "running", "weight": 1],
-            ["text": "school environment", "weight": 1],
-            ["text": "near cafeteria", "weight": 1],
-            ["text": "sharp focus", "weight": 1],
-            ["text": "cinematic lighting", "weight": 1]]
-            
-            I've included "Concept art" and "Digital painting" because they fit the illustrative nature of the scene. Additionally, I've added "sharp focus" to emphasize the character and his uniqueness, and "cinematic lighting" to give depth to the environment.
-            """
-
-            // Extract the desired section
-            let extractedSection = extractPromptSection(from: chatGPTOutput)
-            print(extractedSection)
+            print("recieved text: \(text)")
 
             
-//            generatePrompt(selectedText: receivedHighlightedTexts) { promptResult in
-//                if let prompt = promptResult {
-//                    // Use 'prompt' value here. For example:
-//                    print("Received prompt: \(prompt)")
-//                    
-//                    // You can also call your other function here if needed:
-//                    generateImage(prompt: prompt) { imageData in
-//                        if let data = imageData, let image = UIImage(data: data) {
-//                            DispatchQueue.main.async {
-//                                yourImageView.image = image
-//                            }
-//                        } else {
-//                            print("Failed to generate or load the image.")
-//                        }
-//                    }
-//
-//                } else {
-//                    print("Failed to generate a prompt.")
-//                }
-//            }
+
+
+            generatePrompt(selectedText: receivedHighlightedTexts!) { promptResult in
+                if let prompt = promptResult {
+                    // Use 'prompt' value here. For example:
+                    print("Received prompt: \(prompt)")
+                    
+                    // You can also call your other function here if needed:
+                    self.generateImage(prompt: prompt) { imageData in
+                        if let data = imageData, let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                self.imageView.image = image
+                            }
+                        } else {
+                            print("Failed to generate or load the image.")
+                        }
+                    }
+
+                } else {
+                    print("Failed to generate a prompt.")
+                }
+            }
 
 
             
         }
     }
+    let gptContext = """
+I need you to create a prompt for AI art generation. Here is a guide on how to create a prompt:
+    
+keyword:
+\"Portrait drawings that are very realistic. Good to use with people
+Digital painting: Digital art style
+Concept art: Illustration style, 2D
+Ultra realistic: illustration drawing that are very realistic. Good to use with people
+Underwater portrait: Use with people. Underwater. Hair floating
+Underwater steampunk: underwater with wash color\"
+
+These keywords further refine the art style.
+keyword: Note
+hyperrealistic: Increases details and resolution
+pop-art: Pop-art style
+Modernist: vibrant color, high contrast
+art nouveau: Add ornaments and details, building style\"
+
+artstation: Modern illustration, fantasy\"
+
+\"Resolution
+keyword    Note
+unreal engine: Very realistic and detailed 3D
+sharp focus: Increase resolution
+8k:    Increase resolution, though can lead to it looking more fake.
+vray: 3D rendering best for objects, landscape and building.\"
+
+\"Lighting
+keyword    Note
+rim lighting: light on edge of an object
+cinematic lighting: A generic term to improve contrast by using light
+crepuscular rays: sunlight breaking through the cloud"
+
+\"Additional details
+
+Add specific details to your image.
+keyword    Note
+dramatic: shot from a low angle
+silk: Add silk to clothing
+expansive: More open background, smaller subject
+low angle shot: shot from low angle
+god rays: sunlight breaking through the cloud
+psychedelic: vivid color with distorti
+
+\"Color
+
+Add an additional color scheme to the image.
+keyword    Note
+iridescent gold    : shinny gold
+silver: silver color
+vintage: vintage effect"
+
+
+
+I want you to return only the prompt in this format :
+
+\"
+[\"text\": \"Attribute 1\", \"weight\": 1], [\"text\": \"Attribute 2\", \"weight\": 1], [\"text\": \"Attribute 3\", \"weight\": 1]...
+\"
+
+
+
+I will give a scene in a book. Turn this scene in a book into a prompt.
+"""
 }
 
 
