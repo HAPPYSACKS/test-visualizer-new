@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00E4702F2ACA4FD3005D22A2 /* PixeloidMono-d94EV.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00E4702E2ACA4FD3005D22A2 /* PixeloidMono-d94EV.ttf */; };
 		44F47BC92AC53EF5008024D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F47BC82AC53EF5008024D2 /* AppDelegate.swift */; };
 		44F47BCB2AC53EF5008024D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F47BCA2AC53EF5008024D2 /* SceneDelegate.swift */; };
 		44F47BCD2AC53EF5008024D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F47BCC2AC53EF5008024D2 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00E4702E2ACA4FD3005D22A2 /* PixeloidMono-d94EV.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PixeloidMono-d94EV.ttf"; path = "../../../../Downloads/pixeloid-font/PixeloidMono-d94EV.ttf"; sourceTree = "<group>"; };
 		449CFBE82AC54BC00002787A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		44F47BC52AC53EF5008024D2 /* test-visualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-visualizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44F47BC82AC53EF5008024D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 		44F47BC72AC53EF5008024D2 /* test-visualizer */ = {
 			isa = PBXGroup;
 			children = (
+				00E4702E2ACA4FD3005D22A2 /* PixeloidMono-d94EV.ttf */,
 				44F47BC82AC53EF5008024D2 /* AppDelegate.swift */,
 				44F47BCA2AC53EF5008024D2 /* SceneDelegate.swift */,
 				44F47BCC2AC53EF5008024D2 /* ViewController.swift */,
@@ -138,6 +141,7 @@
 			files = (
 				44F47BD52AC53EF7008024D2 /* LaunchScreen.storyboard in Resources */,
 				44F47BD22AC53EF7008024D2 /* Assets.xcassets in Resources */,
+				00E4702F2ACA4FD3005D22A2 /* PixeloidMono-d94EV.ttf in Resources */,
 				44F47BD02AC53EF5008024D2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,14 +306,16 @@
 		};
 		44F47BDA2AC53EF7008024D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 449CFBE82AC54BC00002787A /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 25UB2YN8GU;
+				DEVELOPMENT_TEAM = QU2AA2QS8Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "test-visualizer/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires the use of your camera to use the text scan feature.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -321,7 +327,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "tehfreako-gmail.com.test-visualizer";
+				PRODUCT_BUNDLE_IDENTIFIER = "devontran9122-gmail.com.test-visualizer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -331,14 +337,16 @@
 		};
 		44F47BDB2AC53EF7008024D2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 449CFBE82AC54BC00002787A /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 25UB2YN8GU;
+				DEVELOPMENT_TEAM = QU2AA2QS8Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "test-visualizer/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires the use of your camera to use the text scan feature.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -350,7 +358,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "tehfreako-gmail.com.test-visualizer";
+				PRODUCT_BUNDLE_IDENTIFIER = "devontran9122-gmail.com.test-visualizer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
