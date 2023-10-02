@@ -145,7 +145,7 @@ class PhotoViewController: UIViewController {
             "samples": 1,
             "steps": 50,
             "text_prompts": formatted_prompt,
-            "style_preset": "anime"
+            "style_preset": "fantasy-art"
         ]
 
 //        turn requestbody into json
