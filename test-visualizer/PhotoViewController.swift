@@ -143,8 +143,9 @@ class PhotoViewController: UIViewController {
             "width": 512,
             "sampler": "K_DPM_2_ANCESTRAL",
             "samples": 1,
-            "steps": 24,
-            "text_prompts": formatted_prompt
+            "steps": 50,
+            "text_prompts": formatted_prompt,
+            "style_preset": "fantasy-art"
         ]
 
 //        turn requestbody into json
